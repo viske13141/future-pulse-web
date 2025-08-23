@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
-import { Calendar, Award, TrendingUp, Users } from 'lucide-react';
+import { Calendar, Award, TrendingUp, Users, Brain, Cloud, Shield, Smartphone, Code, Database, Zap, Globe } from 'lucide-react';
+import { useState } from 'react';
 
 const timelineData = [
   {
@@ -33,6 +34,57 @@ const skillsData = [
   { skill: "Cloud Architecture", percentage: 90, color: "from-purple-500 to-pink-500" },
   { skill: "Blockchain Technology", percentage: 98, color: "from-green-500 to-teal-500" },
   { skill: "Data Analytics", percentage: 92, color: "from-orange-500 to-red-500" }
+];
+
+const expertiseAreas = [
+  {
+    icon: Brain,
+    title: "Artificial Intelligence",
+    description: "Advanced machine learning, neural networks, and cognitive computing solutions that transform business processes.",
+    technologies: ["TensorFlow", "PyTorch", "OpenAI", "Computer Vision"],
+    projects: "150+",
+    color: "from-blue-500 to-cyan-500"
+  },
+  {
+    icon: Cloud,
+    title: "Cloud Architecture", 
+    description: "Scalable, secure cloud solutions across AWS, Azure, and GCP with microservices and serverless architectures.",
+    technologies: ["AWS", "Azure", "GCP", "Kubernetes"],
+    projects: "200+",
+    color: "from-purple-500 to-pink-500"
+  },
+  {
+    icon: Shield,
+    title: "Cybersecurity",
+    description: "Comprehensive security frameworks, threat detection, and compliance solutions for enterprise environments.",
+    technologies: ["Zero Trust", "SIEM", "Penetration Testing", "Compliance"],
+    projects: "80+",
+    color: "from-red-500 to-orange-500"
+  },
+  {
+    icon: Code,
+    title: "Custom Development",
+    description: "Full-stack development with modern frameworks, APIs, and database design for scalable applications.",
+    technologies: ["React", "Node.js", "Python", "Microservices"],
+    projects: "300+",
+    color: "from-green-500 to-teal-500"
+  },
+  {
+    icon: Database,
+    title: "Data Engineering",
+    description: "Big data processing, real-time analytics, and data warehouse solutions for data-driven insights.",
+    technologies: ["Apache Spark", "Kafka", "Snowflake", "ETL"],
+    projects: "120+",
+    color: "from-indigo-500 to-purple-500"
+  },
+  {
+    icon: Smartphone,
+    title: "Mobile Solutions",
+    description: "Native and cross-platform mobile applications with exceptional user experiences across all devices.",
+    technologies: ["React Native", "Flutter", "iOS", "Android"],
+    projects: "90+",
+    color: "from-pink-500 to-rose-500"
+  }
 ];
 
 const CircularProgress = ({ percentage, color, skill }: { percentage: number; color: string; skill: string }) => {
@@ -88,6 +140,8 @@ const CircularProgress = ({ percentage, color, skill }: { percentage: number; co
 };
 
 const Expertise = () => {
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+
   return (
     <div className="min-h-screen py-20">
       {/* Header */}
@@ -189,8 +243,98 @@ const Expertise = () => {
         </div>
       </section>
 
-      {/* Strategic Vision */}
+      {/* Expertise Areas - Animated Icon Cards */}
       <section className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">Our Expertise</h2>
+            <p className="text-xl text-muted-foreground">Specialized knowledge across cutting-edge technologies</p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {expertiseAreas.map((area, index) => (
+              <motion.div
+                key={area.title}
+                initial={{ opacity: 0, y: 50, rotateY: -15 }}
+                whileInView={{ opacity: 1, y: 0, rotateY: 0 }}
+                transition={{ duration: 0.8, delay: index * 0.1 }}
+                whileHover={{ 
+                  y: -10, 
+                  rotateY: hoveredCard === index ? 180 : 0,
+                  scale: 1.02
+                }}
+                onHoverStart={() => setHoveredCard(index)}
+                onHoverEnd={() => setHoveredCard(null)}
+                className="group relative bg-card rounded-2xl p-8 shadow-card hover:shadow-glow glow-border transition-all duration-500 cursor-pointer perspective-1000"
+                style={{ transformStyle: 'preserve-3d' }}
+              >
+                {/* Front Face */}
+                <div className={`${hoveredCard === index ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300`}>
+                  {/* Icon */}
+                  <motion.div
+                    whileHover={{ rotate: 360, scale: 1.1 }}
+                    transition={{ duration: 0.6 }}
+                    className={`w-20 h-20 bg-gradient-to-r ${area.color} rounded-2xl flex items-center justify-center mb-6 group-hover:shadow-glow mx-auto`}
+                  >
+                    <area.icon className="text-white" size={32} />
+                  </motion.div>
+
+                  {/* Content */}
+                  <h3 className="text-2xl font-bold text-foreground mb-4 text-center group-hover:text-primary transition-colors duration-300">
+                    {area.title}
+                  </h3>
+                  <p className="text-muted-foreground text-center leading-relaxed">
+                    {area.description}
+                  </p>
+
+                  {/* Projects Count */}
+                  <div className="mt-6 text-center">
+                    <span className="text-3xl font-bold text-primary">{area.projects}</span>
+                    <p className="text-sm text-muted-foreground">Projects Completed</p>
+                  </div>
+                </div>
+
+                {/* Back Face - Detailed Info */}
+                <div className={`absolute inset-0 p-8 ${hoveredCard === index ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300 bg-gradient-to-br ${area.color} text-white rounded-2xl flex flex-col justify-center`}>
+                  <h3 className="text-2xl font-bold mb-4 text-center">{area.title}</h3>
+                  
+                  <div className="space-y-4">
+                    <div>
+                      <h4 className="font-semibold mb-2">Technologies:</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {area.technologies.map((tech, techIndex) => (
+                          <span 
+                            key={techIndex}
+                            className="px-3 py-1 bg-white/20 rounded-full text-sm font-medium"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div className="text-center">
+                      <div className="text-4xl font-bold mb-1">{area.projects}</div>
+                      <div className="text-white/90">Successful Projects</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Hover Glow Effect */}
+                <div className={`absolute inset-0 bg-gradient-to-r ${area.color} opacity-0 group-hover:opacity-5 rounded-2xl transition-opacity duration-300`}></div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Strategic Vision - Circular Progress */}
+      <section className="py-20 bg-muted/30">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
