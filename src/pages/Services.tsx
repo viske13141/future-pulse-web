@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
-import { Brain, Cloud, Code, Shield, Smartphone, BarChart3 } from 'lucide-react';
+import { Brain, Cloud, Code, Shield, Smartphone, BarChart3, Building, Globe, Award, Zap } from 'lucide-react';
+import RadialOrbitalTimeline from '@/components/ui/radial-orbital-timeline';
 
 const services = [
   {
@@ -38,6 +39,53 @@ const services = [
     description: "Transform raw data into actionable insights with advanced analytics and business intelligence solutions.",
     features: ["Data Warehousing", "Business Intelligence", "Real-time Analytics", "Data Visualization"]
   }
+];
+
+const timelineData = [
+  {
+    id: 1,
+    title: "Company Founded",
+    date: "2018",
+    content: "Started with a vision to revolutionize technology solutions for businesses worldwide. First AI project completed.",
+    category: "Foundation",
+    icon: Building,
+    relatedIds: [2],
+    status: "completed" as const,
+    energy: 100,
+  },
+  {
+    id: 2,
+    title: "Global Expansion",
+    date: "2020",
+    content: "Extended our services internationally, establishing partnerships in 15+ countries. 100+ successful projects completed.",
+    category: "Growth",
+    icon: Globe,
+    relatedIds: [1, 3],
+    status: "completed" as const,
+    energy: 90,
+  },
+  {
+    id: 3,
+    title: "Innovation Leadership",
+    date: "2022",
+    content: "Launched cutting-edge blockchain and AI solutions, setting industry standards. Industry recognition awards received.",
+    category: "Innovation",
+    icon: Award,
+    relatedIds: [2, 4],
+    status: "completed" as const,
+    energy: 95,
+  },
+  {
+    id: 4,
+    title: "Future Forward",
+    date: "2024",
+    content: "Leading the next wave of digital transformation with quantum computing and advanced AI. 500+ happy clients achieved.",
+    category: "Future",
+    icon: Zap,
+    relatedIds: [3],
+    status: "in-progress" as const,
+    energy: 85,
+  },
 ];
 
 const TypingEffect = ({ text }: { text: string }) => {
@@ -140,6 +188,29 @@ const Services = () => {
             ))}
           </div>
         </div>
+      </section>
+
+      {/* Company Journey Timeline */}
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-12">
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-3xl sm:text-4xl font-bold text-foreground mb-6"
+          >
+            Our Journey
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-xl text-muted-foreground"
+          >
+            Discover the milestones that shaped our innovative path
+          </motion.p>
+        </div>
+        <RadialOrbitalTimeline timelineData={timelineData} />
       </section>
 
       {/* CTA Section */}
